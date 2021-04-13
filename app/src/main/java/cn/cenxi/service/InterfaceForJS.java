@@ -2,9 +2,11 @@ package cn.cenxi.service;
 
 
 import android.webkit.JavascriptInterface;
+import android.webkit.WebView;
 
 import com.alibaba.fastjson.JSON;
 
+import cn.cenxi.MainActivity;
 import cn.cenxi.service.entity.JsData;
 import cn.cenxi.service.gps.GpsService;
 import cn.cenxi.service.gps.serviceImpl.GpsServiceImpl;
@@ -16,7 +18,27 @@ public class InterfaceForJS {
 
     private static GpsService gpsService = new GpsServiceImpl();
 
-    //使用单独的回调js方法回调结果
+
+    //app 调用 页面的 js 方法
+    public static void jsCallbackMethod(final String method, final String params) {
+
+        //拼接js
+        final String js = "javascript:" + method + "('" + params + "')";
+        //获取容器对象
+        final WebView w = MainActivity.w;
+        //调用js方法
+        w.post(new Runnable() {
+            @Override
+            public void run() {
+                //执行
+                w.loadUrl(js);
+            }
+        });
+
+    }
+
+
+    //使用js提供的回调方法回调结果
     @JavascriptInterface
     public String jsCallbackMethod(String jsonstr) {
         //解析接口参数为对象

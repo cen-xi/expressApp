@@ -277,7 +277,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 //禁用非http 和 https 的超链接
-                if (url.contains("://") && !url.contains("ftp://") && !url.contains("http://") && !url.contains("https://")) {
+                if (url.contains("://") && !url.contains("ftp://") && !url.contains("http://")
+                        && !url.contains("https://")) {
                     //不存在时,禁用跳转操作
                     return true;
                 }
